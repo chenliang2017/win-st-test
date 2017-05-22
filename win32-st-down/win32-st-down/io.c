@@ -275,7 +275,7 @@ static _st_netfd_t *_st_netfd_new(int osfd, int nonblock, int is_socket)
 
 #ifdef WIN32
   if(is_socket == FALSE) return(fd);
-  if(nonblock) ioctlsocket(fds[fd->osfd], FIONBIO, &flags);
+  if(nonblock) ioctlsocket(fds[fd->osfd], FIONBIO, &flags);//阻塞
 #else
   if (nonblock) {
     /* Use just one system call */
@@ -588,7 +588,7 @@ int st_connect(_st_netfd_t *fd, const struct sockaddr *addr, int addrlen,
   {
 #endif
 	if (errno == EAGAIN){
-		;//非阻塞的时候，特殊判断
+		return 0;;//非阻塞的时候，特殊判断
 	}
     if (errno != EINTR) {
       /*

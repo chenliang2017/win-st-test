@@ -327,7 +327,7 @@ int io_test()
     st_netfd_t client_stfd = st_accept(stfd, NULL, NULL, ST_UTIME_NO_TIMEOUT);
     srs_trace("8. server get a client. fd=%d", st_netfd_fileno(client_stfd));
     
-    char buf[1024];
+    char buf[128];
     if (st_write(client_stfd, buf, sizeof(buf), ST_UTIME_NO_TIMEOUT) != sizeof(buf)) {
         srs_trace("st_write failed");
         return -1;
@@ -394,7 +394,7 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    if (io_test_2() < 0) {
+    if (io_test() < 0) {
         srs_trace("io_test failed");
         //return -1;
     }
